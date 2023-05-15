@@ -5,6 +5,7 @@ import TaskForm from "./TaskForm";
 import TaskHookForm from "./TaskHookForm";
 import PeopleForm from "./PeopleForm";
 import { initialTasks, initialTeam } from "./data";
+import { ToastContainer, toast } from "react-toastify";
 
 
 function App() {
@@ -13,14 +14,20 @@ function App() {
 
   function handleTaskSubmit(yeniTask) {
     setTasks([yeniTask, ...tasks])
+    toast.success("Yeni task oluşturuldu!")
   }
 
   function handlePeopleSubmit(yeniKisi) {
     setTeam([...team, yeniKisi])
+    toast.success("Yeni kişi eklendi!")
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın")
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, status: "yapıldı" } : task
+      )
+    );
   }
 
   return (
@@ -59,7 +66,7 @@ function App() {
           </div>
         </div>
       </div>
-
+                <ToastContainer />
     </div>
   );
 }
